@@ -1,0 +1,1 @@
+# NET-GraphQL-Identity-Cookie
