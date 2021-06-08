@@ -1,6 +1,6 @@
 using app.Models;
 
-namespace app.GraphQL.Payloads
+namespace app.Payloads
 {
     public record AddPlatformPayload(Platform platform);
 }

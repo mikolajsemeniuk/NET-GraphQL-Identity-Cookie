@@ -1,4 +1,4 @@
-namespace app.GraphQL.Payloads
+namespace app.Inputs
 {
     public record AddPlatformInput(string Name);
 }
