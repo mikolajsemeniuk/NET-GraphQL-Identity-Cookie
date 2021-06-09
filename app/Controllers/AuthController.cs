@@ -7,6 +7,7 @@ using app.Inputs;
 using app.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,12 +31,20 @@ namespace app.Controllers
             _signInManager = signInManager;
         }
 
+        [Authorize]
+        [HttpGet]
+        public string[] check() => new[] 
+        { 
+            HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value,
+            HttpContext.User.FindFirst(ClaimTypes.Email)?.Value 
+        };
+
         private async Task<List<Claim>> GetClaimsList(User user)
         {
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Email)
+                new Claim(ClaimTypes.Email, user.Email)
             };
             var roles = await _userManager.GetRolesAsync(user);
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));

@@ -20,7 +20,7 @@ namespace app.Types
         {
             public User GetUser(Platform platform, [ScopedService] DataContext context)
             {
-                return context.Users.FirstOrDefault(user => user.Id == platform.PlatformId);
+                return context.Users.FirstOrDefault(user => user.Id == platform.UserId);
             }
         }
     }

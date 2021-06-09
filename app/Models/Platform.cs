@@ -8,6 +8,7 @@ namespace app.Models
         public int PlatformId { get; set; }
         [Required]
         public string Name { get; set; }
+        [Required]
         public int UserId { get; set; }
         public virtual User User { get; set; }
     }

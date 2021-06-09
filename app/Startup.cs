@@ -69,6 +69,13 @@ namespace app
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "app", Version = "v1" });
             });
+
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("admin"));
+                opt.AddPolicy("RequireAdminRoleOrModerator", policy => policy.RequireRole("admin", "moderator"));
+                opt.AddPolicy("RequireModerateRole", policy => policy.RequireRole("moderator"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

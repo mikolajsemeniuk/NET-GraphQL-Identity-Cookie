@@ -14,11 +14,17 @@ namespace app.Types
                 .Field(user => user.PasswordHash)
                 .Ignore();
 
-            // descriptor
-                // .Field(user => user.PhoneNumber)
-                // .Authorize() // basic auth
-                // .Authorize(new [] {"foo", "bar"}); // roles
-                // .Authorize("SalesDepartment"); // policy
+            descriptor
+                .Field(user => user.PhoneNumber)
+                .Authorize(new[] { "moderator", "admin" }); // roles
+
+            descriptor
+                .Field(user => user.AccessFailedCount)
+                .Authorize("RequireAdminRoleOrModerator"); // policy
+
+            descriptor
+                .Field(user => user.EmailConfirmed)
+                .Authorize(); // basic auth
 
             descriptor
                 .Field(p => p.Platforms)
@@ -30,7 +36,7 @@ namespace app.Types
         {
             public IQueryable<Platform> GetPlatforms(User user, [ScopedService] DataContext context)
             {
-                return context.Platforms.Where(platform => platform.PlatformId == user.Id);
+                return context.Platforms.Where(platform => platform.UserId == user.Id);
             }
         }
     }
