@@ -91,6 +91,11 @@ namespace app
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Strict,
+            });
 
             app.UseAuthentication();
 
